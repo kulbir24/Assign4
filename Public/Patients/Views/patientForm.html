@@ -1,0 +1,192 @@
+<!--   $(function () {
+        $("#datepicker").datepicker({
+            dateFormat: "dd/mm/yy"
+        });
+    });-->
+
+<h2>Patient Details
+</h2>
+
+<form class="form-horizontal" role="form" ng-submit="addOrEditPatient(patient)" name="form1">
+    <div class="form-group">
+
+        <label class="control-label col-sm-2">First Name </label>
+        <div class="col-sm-10">
+            <input required type="text" ng-model="patient.firstname" name="firstName" ng-pattern="/^[A-Z][a-z]+$/">
+
+            <span style="color: red" class="error-container" ng-show="form1.firstName.$dirty && form1.firstName.$invalid">
+                <small class="error" ng-show="form1.firstName.$error.required">Required First Name</small>
+                <small class="error" ng-show="form1.firstName.$error.pattern">First alphabet should be in uppercase</small>
+
+            </span>
+
+        </div>
+
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Last Name</label>
+        <div class="col-sm-10">
+
+            <input required type="text" ng-model="patient.lastname" name="lastName" ng-pattern="/^[A-Z][a-z]+$/">
+
+            <span style="color: red" class="error-container" ng-show="form1.lastName.$dirty && form1.lastName.$invalid">
+                <small class="error" ng-show="form1.lastName.$error.required">Required Last Name</small>
+                <small class="error" ng-show="form1.lastName.$error.pattern">First alphabet should be in uppercase</small>
+
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Age</label>
+        <div class="col-sm-10">
+
+            <input required type="text" ng-model="patient.age" name="age" ng-pattern="/^(0?[1-9]|[1-9][0-9])$/">
+
+            <span style="color: red" class="error-container" ng-show="form1.age.$dirty && form1.age.$invalid">
+                <small class="error" ng-show="form1.lastName.$error.required">Required Age</small>
+                <small class="error" ng-show="form1.lastName.$error.pattern">Should be 1-99</small>
+
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Phone Number</label>
+        <div class="col-sm-10">
+            <input type="tel" ng-model="patient.phonenumber" name="phoneNo" ng-minlength="10" ng-maxlength="10" required />
+            <span style="color: red" class="error-container" ng-show="form1.phoneNo.$dirty && form1.phoneNo.$invalid">
+                <small class="error" ng-show="form1.phoneNo.$error.required">Required Phone Number</small>
+                <span class="error" ng-show="form1.phoneNo.$error.minlength">At least 10 characters</span>
+                <span class="error" ng-show="form1.phoneNo.$error.maxlength">Should be less than 10 characters</span>
+
+            </span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Last Visited Date</label>
+        <div class="col-sm-10">
+            <input type="hidden" ng-model="patient.createdate">
+            <input required type="date" ng-model="patient.lastvisitdate">
+        </div>
+    </div>
+
+
+     <div class="form-group">
+        <label class="control-label col-sm-2">Patient Visit History</label>
+        <div class="col-sm-10">
+            <input type="hidden" ng-model="patient.visits" id="visitsJson" />
+            <table  id="showVisit" class="table table-striped">
+
+                <thead>
+                    <tr>
+                        <!-- <th>Sl. No.</th>  -->
+                        <th>Complaint</th>
+                        <th>Billing Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-ng-repeat="visit in patient.visits">
+
+                        <td>{{visit.complaint}}</td>
+                        <td>{{visit.billingamt}}</td>
+
+
+                        <td>
+                            <button class="btn" ng-click="removeVisit(visit.id)">
+                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Delete
+                            </button>
+                        </td>
+
+                    </tr>
+                    <!--<tr>
+                        <td colspan="3">
+                            <button class="btn" ng-click="addNewVisit=true">
+                                <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Add New Visit
+                            </button>
+
+                        </td>
+                    </tr>-->
+                </tbody>
+            </table>
+
+
+
+            <div  class="form-horizontal" >
+                <div class="form-group">
+
+                    <label class="control-label col-sm-2">Complaint</label>
+                    <div class="col-sm-10">
+                        <input required type="text" ng-model="visit.complaint" name="complaint" >
+
+                       
+                    </div>
+
+                </div>
+
+               
+            
+
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">Billing Amount</label>
+                <div class="col-sm-10">
+
+                    <input required type="text" ng-model="visit.billingamt" name="billingamt">
+
+                    
+                </div>
+            </div>
+            
+
+                 <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+
+                        
+                         <button type="button" ng-click="addNewPatientVisit(visit.complaint,visit.billingamt);" class="btn btn-default">Add Visit</button>
+                         <!--<button type="button" ng-click="addNewVisit=false" class="btn btn-default">Cancel</button>-->
+
+                    </div>
+                </div>
+
+          </div>
+
+        </div>
+    </div>
+
+
+
+
+
+
+    <div class="form-group">
+        <label class="col-sm-2 control-label">Status</label>
+        <div>
+
+            <input required type="radio" ng-model="patient.status" name="Status" value="active">Active
+       
+            <input required type="radio" ng-model="patient.status" name="Status" value="inactive">InActive
+      
+   
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-sm-2">Family Doctor</label>
+        <div class="col-sm-10">
+
+            <select data-ng-model="patient.doctorid" name="doctorid" ng-options="doctor.doctorid as doctor.firstname for doctor in doctors">
+            </select>
+
+        </div>
+    </div>
+
+   
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+
+           <button type="submit" class="btn btn-default">Save</button>
+           <button type="button" ng-click="cancelClick()" class="btn btn-default">Cancel</button>
+
+        </div>
+    </div>
+</form>

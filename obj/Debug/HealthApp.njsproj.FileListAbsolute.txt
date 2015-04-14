@@ -1,0 +1,2 @@
+C:\Users\hp world\Documents\Visual Studio 2012\Projects\HealthApp\HealthApp\obj\Debug\HealthApp.njsprojResolveAssemblyReference.cache
+C:\Users\hp world\Documents\Visual Studio 2012\Projects\HealthApp\HealthApp\bin\Microsoft.NodejsTools.WebRole.dll

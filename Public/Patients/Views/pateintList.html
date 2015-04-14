@@ -1,0 +1,93 @@
+ <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/twitter-bootstrap/2.3.2/css/bootstrap-combined.min.css" />
+   
+ 
+<h1 ng-show="currentUser!=null"><span class="fa fa-sign-in">Your Patients Doctor {{currentUser}}</span></h1>
+<h1 ng-show="currentUser==null"><span class="fa fa-sign-in">All Patients</span></h1>
+<table class="table table-striped">
+    
+  <thead><tr>
+    
+       <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+      <th>Phone Number</th>
+      <th>Created Date</th>
+      <th>Last Visit On</th>
+
+    <th>Patient Visit History</th>
+      <th>Status</th>
+      <th>Doctor</th>
+        <th colspan="3" ng-show="currentUser!=null">Edit/Chat</th>
+  </tr></thead>
+  <tbody>
+       <tr data-ng-repeat="patient in patients|orderBy:'lastname':false| filter:currentUser| offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
+          
+        <td>{{patient.firstname}}</td>
+        <td>{{patient.lastname}}</td>
+           <td>{{patient.age}}</td>
+         <td>{{patient.phonenumber}}</td>
+            <td>{{patient.createdate}}</td>
+         <td>{{patient.lastvisitdate}}</td>
+           <td>
+               <table class="table table-striped">
+                  <tr>
+                       
+                        <th>Complaint</th>
+                        <th>Billing Amount</th>
+                        
+                  </tr>
+               <tr data-ng-repeat="visit in patient.visits">
+
+                        <td>{{visit.complaint}}</td>
+                        <td>{{visit.billingamt}}</td>
+
+
+
+                 </tr>
+                    
+                </table>
+
+           </td>
+         <td>{{patient.status}}</td>
+           <td>{{patient.doctorid}}</td>
+      <td ng-show="currentUser!=null">
+      <button class="btn" ng-click="onEditClick(patient._id)" >
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
+    </td>
+     <td ng-show="currentUser!=null">
+      <button class="btn" ng-click="remove(patient._id)">
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Delete
+      </button>
+    </td>
+           <td ng-show="currentUser!=null">
+      <input type="button" onclick="popUpChatWindow(this, 'W'+Math.abs(Math.random()*100000))" class="btn" value="Chat" />
+    </td>
+  </tr>
+      <tr ng-show="currentUser!=null">
+        <td colspan="11">
+            <button class="btn" ng-click="addNewPatientClick()">
+                <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Add New Record
+            </button>
+
+        </td>
+    </tr>
+  </tbody>
+    <tfoot>
+        <td colspan="3">
+          <div class="pagination">
+            <ul>
+              <li ng-class="prevPageDisabled()">
+                <a href ng-click="prevPage()">« Prev</a>
+              </li>
+              <li ng-repeat="n in range()" ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                <a href="#">{{n+1}}</a>
+              </li>
+              <li ng-class="nextPageDisabled()">
+                <a href ng-click="nextPage()">Next »</a>
+              </li>
+            </ul>
+          </div>
+        </td>
+      </tfoot>
+</table>

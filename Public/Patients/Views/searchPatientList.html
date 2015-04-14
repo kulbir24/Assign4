@@ -1,0 +1,65 @@
+﻿
+ 
+<h1 ><span class="fa fa-sign-in">Patients Search Portal</span></h1>
+
+<table class="table table-striped">
+    
+  <thead>
+<tr>
+    
+       <th>Last Name : <input ng-model="search.lastname"></th>
+      <th></th>
+
+      <th>First Name: <input ng-model="search.firstname"></th>
+      <th></th>
+      <th>Phone Number: <input ng-model="search.phonenumber"></th>
+      <th></th>
+      
+      <th>Patient Doctor:
+           <select  data-ng-model="search.doctorid"  ng-options="doctor.doctorid as doctor.firstname for doctor in doctors">
+               
+		      </select> </th>
+        
+  </tr>
+      </thead>
+      </table>
+<table class="table table-striped">
+    
+  <thead><tr>
+    
+       <th>First Name</th>
+      <th>Last Name</th>
+      <th>Age</th>
+      <th>Phone Number</th>
+      <th>Created Date</th>
+      <th>Last Visit On</th>
+      <th>Status</th>
+      <th>Doctor</th>
+        <th colspan="2" ng-show="currentUser!=null">Edit</th>
+  </tr></thead>
+  <tbody>
+       <tr data-ng-repeat="patient in patients|orderBy:'lastname':false| filter:search:strict">
+          
+        <td>{{patient.firstname}}</td>
+        <td>{{patient.lastname}}</td>
+           <td>{{patient.age}}</td>
+         <td>{{patient.phonenumber}}</td>
+            <td>{{patient.createdate}}</td>
+         <td>{{patient.lastvisitdate}}</td>
+         <td>{{patient.status}}</td>
+           <td>{{patient.doctorid}}</td>
+      <td ng-show="currentUser!=null">
+      <button class="btn" ng-click="onEditClick(patient._id)" >
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Edit
+      </button>
+    </td>
+     <td ng-show="currentUser!=null">
+      <button class="btn" ng-click="remove(patient._id)">
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Delete
+      </button>
+    </td>
+  </tr>
+     
+  </tbody>
+    
+</table>

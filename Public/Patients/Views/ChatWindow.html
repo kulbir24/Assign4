@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <style>
+         *{ 
+          margin: 0; padding: 0; box-sizing: border-box; 
+      }
+      body { 
+          font: 13px Helvetica, Arial; 
+      }
+      #form1 {
+           background: rgb(194, 74, 74); padding: 3px; position: fixed; bottom: 0; width: 100%; 
+      }
+      #form1 input {
+           border: 0; padding: 10px; width: 90%; margin-right: .5%; 
+      }
+      #form1 button { 
+          width: 9%; background: rgb(200, 125, 53); border: none; padding: 10px; 
+      }
+      #messageslist { 
+          list-style-type: none; margin: 0; padding: 0; 
+      }
+      #messageslist li { 
+          padding: 5px 10px; 
+      }
+      #messageslist li:nth-child(odd) { 
+          background: #eee; 
+      }
+    </style>
+     
+</head>
+ <body>
+    <ul id="messageslist"></ul>
+    <form id="form1">
+      <input id="m" autocomplete="off" /><button>Send</button>
+    </form>
+      <script src="https://cdn.socket.io/socket.io-1.2.0.js"></script>
+    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+   <script src="client.js"></script>
+  </body>
+</html>
